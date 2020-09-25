@@ -1,0 +1,39 @@
+//* To-Do:
+//* Add mp4 functionality
+//* put that if mp3 is clicked = download mp3 in script.js and vice versa
+//* get video title
+//* match the video downloaded with the highest format (bytes)
+//* fix the table(style and values)
+
+TESTING VIDEO: 
+https://www.youtube.com/watch?v=neV1E4Maie8
+
+VIDEOS/MP4 HAVE AUDIO ONLY IF THEY HAVE THE AUDIOCHANNEL PROPERTY!
+
+[
+  { quality: 720, itag: 18, fps: 30, size: 1850965 },
+  { quality: 720, itag: 398, fps: 60, size: 4199683 },
+  { quality: 720, itag: 136, fps: 30, size: 3254397 },
+  { quality: 720, itag: 298, fps: 60, size: 4533270 },
+  { quality: 720, itag: 397, fps: 30, size: 1397570 },
+  { quality: 720, itag: 135, fps: 30, size: 1214170 },
+  { quality: 720, itag: 396, fps: 30, size: 783896 },
+  { quality: 720, itag: 134, fps: 30, size: 854299 },
+  { quality: 720, itag: 395, fps: 30, size: 381864 },
+  { quality: 720, itag: 133, fps: 30, size: 396331 },
+  { quality: 720, itag: 394, fps: 30, size: 183115 },
+  { quality: 720, itag: 160, fps: 30, size: 179558 }
+]
+
+let check720 = withAudioFormats
+        .filter((quality) => {
+          return (quality.qualityLabel = "720p" || "720p60" || "720p");
+        })
+        .map((value) => {
+          return {
+            quality: Number(value.qualityLabel.replace("p", "")),
+            itag: value.itag,
+            fps: value.fps,
+            size: Number(value.contentLength),
+          };
+        });

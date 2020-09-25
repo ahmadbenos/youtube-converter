@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Downloader</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="display-4 text-center my-3">Youtube MP4/MP3 Downloader</h1>
+        <div class="input-group">
+            <input type="text" class="form-control" id="link" placeholder="Paste youtube URL here">
+            <div class="input-group-append">
+                <select name="type" id="typeId" class="form-control costum-select">
+                    <option value="mp4" class="options" selected>MP4</option>
+                    <option value="mp3">MP3</option>
+                </select>
+            </div>
+        </div><br>
+        <div class="text-center"><button class="btn btn-success btn-block w-50 m-auto"
+                style="font-size: 20px !important; font-weight: 500 !important;"
+                onclick="myFunction()">Submit</button>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-sm-4"><img src="https://i.ytimg.com/vi/rA56B4JyTgI/0.jpg" class="img-fluid"></div>
+            <div class="col-sm-8 my-2">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Quality</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+
+                            <td colspan="2">Larry the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>

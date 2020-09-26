@@ -16,15 +16,17 @@ function myFunction() {
 const getMp4Info = (url) => {
   const userURL = `${window.location.href}getvideo?url=${url}`;
   let loader = document.getElementById("loader");
-  loader.style.display = "block";
-  allFomrats.innerHTML = "";
-  tableHead.innerHTML = "";
-  document.getElementById("thumbnail").src = "";
-  document.getElementById("title").innerText = "";
+  loader.style.display = "block"; // display the loader
+  allFomrats.innerHTML = ""; // remove the table head
+  tableHead.innerHTML = ""; // remove the table content
+  document.getElementById("thumbnail").src = ""; // remove the image
+  document.getElementById("title").innerText = ""; // remove the vid title
+
+  // get data from server
   fetch(userURL)
     .then((res) => {
       if (res.status === 200) {
-        loader.style.display = "none";
+        loader.style.display = "none"; // info loaded = hide the loading animation
         res.json().then((body) => {
           // console.log(body);
           document.getElementById("thumbnail").src = body[1];
@@ -43,6 +45,7 @@ const getMp4Info = (url) => {
             rowItem1.style.fontSize = "20px";
             row.appendChild(rowItem1);
 
+            // convert from bytes to MB(binary)
             let size;
             if (item.size !== null) {
               let kb = item.size / 1024;
@@ -58,12 +61,15 @@ const getMp4Info = (url) => {
 
             const rowItem3 = document.createElement("td");
             const downloadURL = `${window.location.href}downloadmp4?url=${url}&itag=${item.itag}&size=${item.size}`;
+            // add download attribute to the <a> tag to download the response's writedStream
             rowItem3.innerHTML = `<a class="btn btn-outline-primary btn-block" download href="${downloadURL}">Download</a>`;
             row.appendChild(rowItem3);
 
+            // append all rows to the table
             allFomrats.appendChild(row);
           });
         });
+        // if the URL is invalid
       } else if (res.status === 400) {
         loader.style.display = "none";
         alert("Invalid Url");
@@ -76,11 +82,13 @@ const getMp4Info = (url) => {
 const getMp3Info = (url) => {
   const userURL = `${window.location.href}getaudio?url=${url}`;
   let loader = document.getElementById("loader");
-  loader.style.display = "block";
-  allFomrats.innerHTML = "";
-  tableHead.innerHTML = "";
-  document.getElementById("thumbnail").src = "";
-  document.getElementById("title").innerText = "";
+  loader.style.display = "block"; // show loading animation
+  allFomrats.innerHTML = ""; // remove table content
+  tableHead.innerHTML = ""; // remove table head
+  document.getElementById("thumbnail").src = ""; // remove thumbnail
+  document.getElementById("title").innerText = ""; // remove vid title
+
+  // get data from server
   fetch(userURL)
     .then((res) => {
       if (res.status === 200) {
@@ -119,6 +127,7 @@ const getMp3Info = (url) => {
 
             const rowItem3 = document.createElement("td");
             const downloadURL = `${window.location.href}downloadmp3?url=${url}&itag=${item.itag}&size=${item.size}`;
+            // add download attribute to the <a> tag to download the response's writedStream
             rowItem3.innerHTML = `<a class="btn btn-outline-primary btn-block" download href="${downloadURL}">Download</a>`;
             row.appendChild(rowItem3);
 

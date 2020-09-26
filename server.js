@@ -13,7 +13,7 @@ let stream = ytdl(url);
 
 //! get video info and send to client
 app.get("/getvideo", (req, res) => {
-  let url = req.query.url;
+  let url = req.query.url; // get user's input
   if (!ytdl.validateURL(url)) {
     return res.sendStatus(400);
   }
@@ -21,13 +21,12 @@ app.get("/getvideo", (req, res) => {
   ytdl
     .getBasicInfo(url)
     .then((data) => {
-      //! get all vids with audio
       const thumbnail =
         data.player_response.videoDetails.thumbnail.thumbnails[3].url;
       const title = data.player_response.videoDetails.title;
       //console.log();
       let withAudioFormats = data.formats
-        //filter the formats to video with audio only
+        //!filter the formats to video with audio only
         .filter((type) => {
           return (
             type.mimeType.includes("video") &&
@@ -75,6 +74,7 @@ app.get("/downloadmp4", (req, res) => {
     filter: "video",
     quality: itag,
   }).pipe(res);
+  // pipe function converts a readable stream to a writable stream
 });
 
 //! get audio info and send to client
@@ -89,10 +89,12 @@ app.get("/getaudio", (req, res) => {
       data.player_response.videoDetails.thumbnail.thumbnails[3].url;
     const title = data.player_response.videoDetails.title;
 
+    // get all audio formats
     const audio = data.formats
       .filter((format) => {
         return format.mimeType.includes("audio");
       })
+      // create a new array with the needed info only
       .map((item) => {
         return {
           quality: item.audioQuality.substr(14).toLowerCase(),
@@ -101,6 +103,7 @@ app.get("/getaudio", (req, res) => {
           size: Number(item.contentLength),
         };
       })
+      //sort the formats from highest bitrate to lowest
       .sort((x, y) => {
         return y.bitrate - x.bitrate;
       });
@@ -127,6 +130,7 @@ app.get("/downloadmp3", (req, res) => {
     filter: "audio",
     quality: itag,
   }).pipe(res);
+  // pipe function converts a readable stream to a writable stream
 });
 
 const PORT = process.env.PORT || 5000;

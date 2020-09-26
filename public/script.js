@@ -44,9 +44,12 @@ const downloadMP4 = (url) => {
 
 const getInfo = (url) => {
   const userURL = `${window.location.href}onlyinfo?url=${url}`;
+  let loader = document.getElementById("loader");
+  loader.style.display = "block";
   fetch(userURL)
     .then((res) => {
       if (res.status === 200) {
+        loader.style.display = "none";
         res.json().then((body) => {
           console.log(body);
           document.getElementById("thumbnail").src = body[1];
@@ -87,6 +90,7 @@ const getInfo = (url) => {
           });
         });
       } else if (res.status === 400) {
+        loader.style.display = "none";
         alert("Invalid Url");
       }
     })

@@ -12,7 +12,7 @@ app.use(cors());
 let stream = ytdl(url);
 
 //! get video info and send to client
-app.get("/onlyinfo", (req, res) => {
+app.get("/getvideo", (req, res) => {
   let url = req.query.url;
   if (!ytdl.validateURL(url)) {
     return res.sendStatus(400);
@@ -57,7 +57,7 @@ app.get("/onlyinfo", (req, res) => {
     });
 });
 
-//* MP4 FUNCTIONALITY
+//* MP4 Download Functionality
 app.get("/downloadmp4", (req, res) => {
   let url = req.query.url;
   let itag = req.query.itag;
@@ -77,6 +77,7 @@ app.get("/downloadmp4", (req, res) => {
   }).pipe(res);
 });
 
+//! get audio info and send to client
 app.get("/getaudio", (req, res) => {
   let url = req.query.url;
   if (!ytdl.validateURL(url)) {
@@ -84,6 +85,10 @@ app.get("/getaudio", (req, res) => {
   }
   ytdl.getBasicInfo(url).then((data) => {
     //console.log(data.formats);
+    const thumbnail =
+      data.player_response.videoDetails.thumbnail.thumbnails[3].url;
+    const title = data.player_response.videoDetails.title;
+
     const audio = data.formats
       .filter((format) => {
         return format.mimeType.includes("audio");
@@ -95,10 +100,34 @@ app.get("/getaudio", (req, res) => {
           bitrate: item.bitrate,
           size: Number(item.contentLength),
         };
+      })
+      .sort((x, y) => {
+        return y.bitrate - x.bitrate;
       });
-    res.send(audio);
-    console.log(audio);
+    res.send([audio, thumbnail, title]);
+    //console.log(audio);
   });
 });
+
+//* MP3 Download Functionality
+app.get("/downloadmp3", (req, res) => {
+  let url = req.query.url;
+  let itag = req.query.itag;
+  let size = req.query.size;
+  if (!ytdl.validateURL(url)) {
+    return res.sendStatus(400);
+  }
+  //console.log(data.player_response.videoDetails.title);
+  res.header({
+    "Content-Disposition": 'attachment; filename="download.mp3"',
+    "Content-length": size,
+  });
+  ytdl(url, {
+    format: "mp3",
+    filter: "audio",
+    quality: itag,
+  }).pipe(res);
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

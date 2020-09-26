@@ -4,11 +4,11 @@ const allFomrats = document.getElementById("allFormats");
 const options = document.querySelectorAll(".options");
 const option = [...options];
 function myFunction() {
-  getInfo(link.value);
+  getMp3Info(link.value);
   if (option[0].selected === true) {
-    //getInfo(link.value);
+    //getMp4Info(link.value);
   } else if (option[1].selected === true) {
-    downloadMP3(link.value);
+    // downloadMP3(link.value);
   }
 }
 
@@ -42,7 +42,7 @@ const downloadMP4 = (url) => {
   });
 };
 
-const getInfo = (url) => {
+const getMp4Info = (url) => {
   const userURL = `${window.location.href}onlyinfo?url=${url}`;
   let loader = document.getElementById("loader");
   loader.style.display = "block";
@@ -95,4 +95,13 @@ const getInfo = (url) => {
       }
     })
     .catch((err) => console.log(err));
+};
+
+const getMp3Info = (url) => {
+  const userURL = `${window.location.href}getaudio?url=${url}`;
+  fetch(userURL).then((res) =>
+    res.json().then((body) => {
+      console.log(body);
+    })
+  );
 };

@@ -11,41 +11,6 @@ app.use(cors());
 
 let stream = ytdl(url);
 
-//* MP4 FUNCTIONALITY
-app.get("/downloadmp4", (req, res) => {
-  let url = req.query.url;
-  let itag = req.query.itag;
-  let size = req.query.size;
-  if (!ytdl.validateURL(url)) {
-    return res.sendStatus(400);
-  }
-  //console.log(data.player_response.videoDetails.title);
-  res.header({
-    "Content-Disposition": 'attachment; filename="download.mp4"',
-    "Content-length": size,
-  });
-  ytdl(url, {
-    format: "mp4",
-    filter: "video",
-    quality: itag,
-  }).pipe(res);
-});
-
-/* app.get("/justdownload", (req, res) => {
-  let url = req.query.url;
-  if (!ytdl.validateURL(url)) {
-    return res.sendStatus(400);
-  }
-
-  res.header({
-    "Content-Disposition": 'attachment; filename="title.mp3"',
-  });
-  ytdl(url, {
-    format: "mp3",
-    filter: "audioonly",
-  }).pipe(res);
-}); */
-
 //! get video info and send to client
 app.get("/onlyinfo", (req, res) => {
   let url = req.query.url;
@@ -92,5 +57,48 @@ app.get("/onlyinfo", (req, res) => {
     });
 });
 
+//* MP4 FUNCTIONALITY
+app.get("/downloadmp4", (req, res) => {
+  let url = req.query.url;
+  let itag = req.query.itag;
+  let size = req.query.size;
+  if (!ytdl.validateURL(url)) {
+    return res.sendStatus(400);
+  }
+  //console.log(data.player_response.videoDetails.title);
+  res.header({
+    "Content-Disposition": 'attachment; filename="download.mp4"',
+    "Content-length": size,
+  });
+  ytdl(url, {
+    format: "mp4",
+    filter: "video",
+    quality: itag,
+  }).pipe(res);
+});
+
+app.get("/getaudio", (req, res) => {
+  let url = req.query.url;
+  if (!ytdl.validateURL(url)) {
+    return res.sendStatus(400);
+  }
+  ytdl.getBasicInfo(url).then((data) => {
+    //console.log(data.formats);
+    const audio = data.formats
+      .filter((format) => {
+        return format.mimeType.includes("audio");
+      })
+      .map((item) => {
+        return {
+          quality: item.audioQuality.substr(14).toLowerCase(),
+          itag: item.itag,
+          bitrate: item.bitrate,
+          size: Number(item.contentLength),
+        };
+      });
+    res.send(audio);
+    console.log(audio);
+  });
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

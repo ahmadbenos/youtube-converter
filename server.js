@@ -11,27 +11,24 @@ app.use(cors());
 
 let stream = ytdl(url);
 
-//* MP3 FUNCTIONALITY
+//* MP4 FUNCTIONALITY
 app.get("/downloadmp4", (req, res) => {
   let url = req.query.url;
+  let itag = req.query.itag;
+  let size = req.query.size;
   if (!ytdl.validateURL(url)) {
     return res.sendStatus(400);
   }
-  ytdl
-    .getBasicInfo(url)
-    .then((data) => {
-      //* res.json(info);
-      // console.log(data.formats);
-      res.header({
-        "Content-Disposition": 'attachment; filename="title.mp4"',
-      });
-      ytdl(url, {
-        format: "mp4",
-        filter: "video",
-        quality: 18,
-      }).pipe(res);
-    })
-    .catch((err) => console.log(err));
+  //console.log(data.player_response.videoDetails.title);
+  res.header({
+    "Content-Disposition": 'attachment; filename="download.mp4"',
+    "Content-length": size,
+  });
+  ytdl(url, {
+    format: "mp4",
+    filter: "video",
+    quality: itag,
+  }).pipe(res);
 });
 
 /* app.get("/justdownload", (req, res) => {
@@ -60,6 +57,10 @@ app.get("/onlyinfo", (req, res) => {
     .getBasicInfo(url)
     .then((data) => {
       //! get all vids with audio
+      const thumbnail =
+        data.player_response.videoDetails.thumbnail.thumbnails[3].url;
+      const title = data.player_response.videoDetails.title;
+      //console.log();
       let withAudioFormats = data.formats
         //filter the formats to video with audio only
         .filter((type) => {
@@ -82,10 +83,9 @@ app.get("/onlyinfo", (req, res) => {
           return y.quality - x.quality;
         });
 
-      console.log(withAudioFormats);
-      // console.log(check720);
+      //console.log(withAudioFormats);
 
-      res.send(withAudioFormats);
+      res.send([withAudioFormats, thumbnail, title]);
     })
     .catch((err) => {
       console.log(err);

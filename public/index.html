@@ -11,7 +11,7 @@
         crossorigin="anonymous" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youtube Downloader</title>
+    <title>Youtube Converter</title>
 </head>
 
 <body>
@@ -36,6 +36,12 @@
                 onclick="myFunction()">Submit</button>
         </div>
 
+        <div class="alert alert-success alert-dismissible fade show my-1" id="download-alert" role="alert">
+            <strong>Your download will start in a few seconds!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <!--! The loading animation-->
         <div class="loader" id="loader">
             <div class="sk-circle">

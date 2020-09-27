@@ -21,6 +21,7 @@ const getMp4Info = (url) => {
   tableHead.innerHTML = ""; // remove the table content
   document.getElementById("thumbnail").src = ""; // remove the image
   document.getElementById("title").innerText = ""; // remove the vid title
+  document.getElementById("download-alert").style.display = "none"; // remove download-alert if it's found
 
   // get data from server
   fetch(userURL)
@@ -87,6 +88,7 @@ const getMp3Info = (url) => {
   tableHead.innerHTML = ""; // remove table head
   document.getElementById("thumbnail").src = ""; // remove thumbnail
   document.getElementById("title").innerText = ""; // remove vid title
+  document.getElementById("download-alert").style.display = "none"; // remove download-alert if it's found
 
   // get data from server
   fetch(userURL)
@@ -128,7 +130,7 @@ const getMp3Info = (url) => {
             const rowItem3 = document.createElement("td");
             const downloadURL = `${window.location.href}downloadmp3?url=${url}&itag=${item.itag}&size=${item.size}`;
             // add download attribute to the <a> tag to download the response's writedStream
-            rowItem3.innerHTML = `<a class="btn btn-outline-primary btn-block" download href="${downloadURL}">Download</a>`;
+            rowItem3.innerHTML = `<a class="btn btn-outline-primary btn-block" download href="${downloadURL}" onclick="msg()">Download</a>`;
             row.appendChild(rowItem3);
 
             allFomrats.appendChild(row);
@@ -141,3 +143,8 @@ const getMp3Info = (url) => {
     })
     .catch((err) => console.log(err));
 };
+
+function msg() {
+  document.getElementById("download-alert").style.display = "none";
+  document.getElementById("download-alert").style.display = "block";
+}

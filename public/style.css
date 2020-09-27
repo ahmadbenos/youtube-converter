@@ -4,6 +4,10 @@
   transform: scale(1.5) !important;
 }
 
+#download-alert {
+  display: none;
+}
+
 /* Loading animation from https://tobiasahlin.com/spinkit/*/
 .sk-circle {
   margin: 100px auto;

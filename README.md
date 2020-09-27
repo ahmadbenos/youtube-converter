@@ -1,3 +1,3 @@
 # youtube-converter
 <h1>Demo Image</h1> 
-![demo](demo.png)
+<img src="demo.png" widt="400" height="400">

@@ -2,7 +2,8 @@
 
 Live demo: <a src="https://ahmadbenos-youtube-converter.glitch.me/">https://ahmadbenos-youtube-converter.glitch.me/</a>
 
-<img src="demo.png" widt="400" height="370">
+<img src="demo.png" height="370">
+
 
 <h1>Usage</h1>
 

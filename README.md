@@ -4,6 +4,9 @@ Live demo: <a src="https://ahmadbenos-youtube-converter.glitch.me/">https://ahma
 
 <img src="demo.png" height="370">
 
+<b>Demo video </b>
+
+![demo](demovid.gif)
 
 <h1>Usage</h1>
 
